@@ -1,0 +1,60 @@
+version: '3'
+
+services:
+
+  paciente:
+    build: ./
+    container_name: paciente
+    restart: unless-stopped
+    environment:
+      - DB_HOST=db-paciente
+      - DB_PORT=3306
+      - DB_USER=paciente
+      - DB_NAME=paciente
+      - DB_PASSWORD=paciente#123
+      - URL=http://127.0.0.1:8010
+    ports:
+      - "8010:8000"
+    links:
+      - db-paciente
+      # - mongo-paciente
+    depends_on:
+      - db-paciente
+      # - mongo-paciente
+    working_dir: /code
+    networks:
+      - paciente_net
+            
+  db-paciente:
+    image: mariadb
+    restart: unless-stopped
+    ports:
+      - "3317:3306"
+    volumes:
+      - db-paciente:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=#paciente123
+      - MYSQL_PASSWORD=paciente#123
+      - MYSQL_DATABASE=paciente
+      - MYSQL_USER=paciente
+    networks:
+      - paciente_net
+
+  # mongo-paciente:
+  #   image: mongo
+  #   container_name: mongo-paciente
+  #   volumes:
+  #     - "mongo-paciente:/data/configdb"
+  #     - "mongo-paciente:/data/db"
+  #   ports:
+  #     - "27020:27017"
+  #   networks:
+  #     - paciente_net 
+
+networks:
+  paciente_net:
+    driver: bridge
+
+volumes:
+  db-paciente:
+  # mongo-paciente:

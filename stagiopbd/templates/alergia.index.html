@@ -1,0 +1,342 @@
+<html>
+
+<head>
+    <title>Alergia</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/sweetalert2/6.5.6/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.5.6/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <style>
+        .inputMaterial {
+            font-size: 14px;
+            padding: 10px 10px 8px 5px;
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid #757575;
+        }
+
+        .inputMaterial:focus {
+            outline: none;
+        }
+
+        .inputMaterial:focus~label,
+        .inputMaterial:valid~label,
+        .inputMaterial[type="email"]:valid~label {
+            top: -15px;
+            font-size: 14px;
+            color: #025AA5;
+        }
+
+        .inputMaterial:focus~.bar:before,
+        .inputMaterial:focus~.bar:after {
+            width: 50%;
+        }
+
+        .inputMaterial:focus~.highlight {
+            -webkit-animation: inputHighlighter 0.3s ease;
+            -moz-animation: inputHighlighter 0.3s ease;
+            animation: inputHighlighter 0.3s ease;
+        }
+
+        .loader {
+            border: 16px solid #f3f3f3;
+            /* Light grey */
+            border-top: 16px solid #0275d8;
+            /* Blue */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            position: absolute;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -60px;
+            margin-left: -60px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        footer.ags-footer,
+        footer.ags-footer--light {
+            background-color: #101010 !important;
+            display: -webkit-box !important;
+            display: -ms-flexbox !important;
+            display: flex !important;
+            -webkit-box-align: center !important;
+            -ms-flex-align: center !important;
+            align-items: center !important;
+            -webkit-box-pack: center !important;
+            -ms-flex-pack: center !important;
+            justify-content: center !important;
+            width: 100% !important;
+            padding: 8px !important;
+            -webkit-box-sizing: border-box !important;
+            box-sizing: border-box !important
+        }
+
+        footer.ags-footer p.ags-footer__text,
+        footer.ags-footer--light p.ags-footer__text {
+            font-family: Arial, Helvetica, sans-serif !important;
+            font-size: 10px !important;
+            color: #9e9e9e !important;
+            margin: 0 8px !important
+        }
+
+        footer.ags-footer--light {
+            background-color: #eee !important
+        }
+
+        footer.ags-footer--light p.ags-footer__text {
+            color: #616161 !important
+        }
+
+        .ags-form__col {
+            position: relative;
+            padding: 20px 30px
+        }
+
+        @media screen and (min-width:900px) {
+            .ags-form__col {
+                min-height: 100vh !important;
+                padding: 20px 60px !important
+            }
+        }
+
+        @media screen and (min-width:1100px) {
+            .ags-form__col {
+                padding: 20px 80px !important
+            }
+        }
+
+        @media screen and (min-width:1400px) {
+            .ags-form__col {
+                padding: 30px 120px !important
+            }
+        }
+
+        @media screen and (min-width:1600px) {
+            .ags-form__col {
+                padding: 40px 200px !important
+            }
+        }
+
+        .ags-form__col--color {
+            background: #eee
+        }
+
+        @media screen and (max-width:900px) {
+            .ags-form__col--color {
+                padding: 100px 0 40px
+            }
+        }
+
+        .ags-form__col-infos {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            max-width: calc(150px + 36px + 400px);
+            margin: auto
+        }
+
+        .ags-form__col-logo-wrapper {
+            width: 100%;
+            top: 0;
+            left: 0;
+            position: absolute
+        }
+
+        .ags-form__col-logo {
+            max-width: 150px
+        }
+
+        @media screen and (min-width:900px) {
+            .ags-form__col-logo {
+                margin-right: 36px
+            }
+        }
+
+        .ags-form__col-title {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 400
+        }
+
+        .ags-form__col-subtitle {
+            color: #fff;
+            font-size: 26px;
+            font-weight: 600;
+            line-height: 36px
+        }
+
+        .ags-top-link,
+        .ags-top-link--white {
+            width: 100%;
+            padding: 30px 15%
+        }
+
+        .ags-top-link a,
+        .ags-top-link--white a {
+            font-weight: 600;
+            text-decoration: none;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            cursor: pointer
+        }
+
+        .ags-top-link--white a {
+            color: #fff
+        }
+
+        .ags-top-link-icon,
+        .ags-top-link-icon--opacity {
+            background: #eee;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: -webkit-inline-box;
+            display: -ms-inline-flexbox;
+            display: inline-flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            margin-right: 16px;
+            -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, .16)
+        }
+
+        .ags-top-link-icon i,
+        .ags-top-link-icon--opacity i {
+            margin: 0;
+            font-size: 18px
+        }
+
+        .ags-top-link-icon--opacity {
+            background: rgba(255, 255, 255, .4);
+            -webkit-box-shadow: none;
+            box-shadow: none
+        }
+
+        .ags-u-flex-center {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap
+        }
+
+        .ags-u-flex-between {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap
+        }
+
+        .ags-u-flex-around {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-pack: distribute;
+            justify-content: space-around;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap
+        }
+
+        .ags-u-light-box-shadow {
+            -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, .16)
+        }
+
+        .ags-u-loading:after {
+            width: 0;
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: bottom;
+            -webkit-animation: ellipsis steps(4, end) .9s infinite;
+            animation: ellipsis steps(4, end) .9s infinite;
+            content: "\2026"
+        }
+
+        @keyframes ellipsis {
+            to {
+                width: 1.25em
+            }
+        }
+
+        @-webkit-keyframes ellipsis {
+            to {
+                width: 1.25em
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div style="padding: 16px">
+        <a href="http://127.0.0.1:8000/stagiop_bd" class="btn btn-outline-primary">Home</a>
+    </div>
+
+    <div style="padding: 16px">
+        <button class="btn btn-info">Cadastrar Alergia</button>
+    </div>
+
+</body>
+
+</html>

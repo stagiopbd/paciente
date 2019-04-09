@@ -1,0 +1,839 @@
+<html>
+
+<head>
+    <title>Paciente</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/sweetalert2/6.5.6/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.5.6/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <style>
+        .inputMaterial {
+            font-size: 14px;
+            padding: 10px 10px 8px 5px;
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid #757575;
+        }
+
+        .inputMaterial:focus {
+            outline: none;
+        }
+
+        .inputMaterial:focus~label,
+        .inputMaterial:valid~label,
+        .inputMaterial[type="email"]:valid~label {
+            top: -15px;
+            font-size: 14px;
+            color: #025AA5;
+        }
+
+        .inputMaterial:focus~.bar:before,
+        .inputMaterial:focus~.bar:after {
+            width: 50%;
+        }
+
+        .inputMaterial:focus~.highlight {
+            -webkit-animation: inputHighlighter 0.3s ease;
+            -moz-animation: inputHighlighter 0.3s ease;
+            animation: inputHighlighter 0.3s ease;
+        }
+
+        .loader {
+            border: 16px solid #f3f3f3;
+            /* Light grey */
+            border-top: 16px solid #0275d8;
+            /* Blue */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            position: absolute;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -60px;
+            margin-left: -60px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        footer.ags-footer,
+        footer.ags-footer--light {
+            background-color: #101010 !important;
+            display: -webkit-box !important;
+            display: -ms-flexbox !important;
+            display: flex !important;
+            -webkit-box-align: center !important;
+            -ms-flex-align: center !important;
+            align-items: center !important;
+            -webkit-box-pack: center !important;
+            -ms-flex-pack: center !important;
+            justify-content: center !important;
+            width: 100% !important;
+            padding: 8px !important;
+            -webkit-box-sizing: border-box !important;
+            box-sizing: border-box !important
+        }
+
+        footer.ags-footer p.ags-footer__text,
+        footer.ags-footer--light p.ags-footer__text {
+            font-family: Arial, Helvetica, sans-serif !important;
+            font-size: 10px !important;
+            color: #9e9e9e !important;
+            margin: 0 8px !important
+        }
+
+        footer.ags-footer--light {
+            background-color: #eee !important
+        }
+
+        footer.ags-footer--light p.ags-footer__text {
+            color: #616161 !important
+        }
+
+        .ags-form__col {
+            position: relative;
+            padding: 20px 30px
+        }
+
+        @media screen and (min-width:900px) {
+            .ags-form__col {
+                min-height: 100vh !important;
+                padding: 20px 60px !important
+            }
+        }
+
+        @media screen and (min-width:1100px) {
+            .ags-form__col {
+                padding: 20px 80px !important
+            }
+        }
+
+        @media screen and (min-width:1400px) {
+            .ags-form__col {
+                padding: 30px 120px !important
+            }
+        }
+
+        @media screen and (min-width:1600px) {
+            .ags-form__col {
+                padding: 40px 200px !important
+            }
+        }
+
+        .ags-form__col--color {
+            background: #eee
+        }
+
+        @media screen and (max-width:900px) {
+            .ags-form__col--color {
+                padding: 100px 0 40px
+            }
+        }
+
+        .ags-form__col-infos {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            max-width: calc(150px + 36px + 400px);
+            margin: auto
+        }
+
+        .ags-form__col-logo-wrapper {
+            width: 100%;
+            top: 0;
+            left: 0;
+            position: absolute
+        }
+
+        .ags-form__col-logo {
+            max-width: 150px
+        }
+
+        @media screen and (min-width:900px) {
+            .ags-form__col-logo {
+                margin-right: 36px
+            }
+        }
+
+        .ags-form__col-title {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 400
+        }
+
+        .ags-form__col-subtitle {
+            color: #fff;
+            font-size: 26px;
+            font-weight: 600;
+            line-height: 36px
+        }
+
+        .ags-top-link,
+        .ags-top-link--white {
+            width: 100%;
+            padding: 30px 15%
+        }
+
+        .ags-top-link a,
+        .ags-top-link--white a {
+            font-weight: 600;
+            text-decoration: none;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            cursor: pointer
+        }
+
+        .ags-top-link--white a {
+            color: #fff
+        }
+
+        .ags-top-link-icon,
+        .ags-top-link-icon--opacity {
+            background: #eee;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: -webkit-inline-box;
+            display: -ms-inline-flexbox;
+            display: inline-flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            margin-right: 16px;
+            -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, .16)
+        }
+
+        .ags-top-link-icon i,
+        .ags-top-link-icon--opacity i {
+            margin: 0;
+            font-size: 18px
+        }
+
+        .ags-top-link-icon--opacity {
+            background: rgba(255, 255, 255, .4);
+            -webkit-box-shadow: none;
+            box-shadow: none
+        }
+
+        .ags-u-flex-center {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap
+        }
+
+        .ags-u-flex-between {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap
+        }
+
+        .ags-u-flex-around {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-pack: distribute;
+            justify-content: space-around;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap
+        }
+
+        .ags-u-light-box-shadow {
+            -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, .16)
+        }
+
+        .ags-u-loading:after {
+            width: 0;
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: bottom;
+            -webkit-animation: ellipsis steps(4, end) .9s infinite;
+            animation: ellipsis steps(4, end) .9s infinite;
+            content: "\2026"
+        }
+
+        @keyframes ellipsis {
+            to {
+                width: 1.25em
+            }
+        }
+
+        @-webkit-keyframes ellipsis {
+            to {
+                width: 1.25em
+            }
+        }
+
+        option {
+            color: dodgerblue
+        }
+    </style>
+
+    <script type="text/javascript">
+        var URL = '{{ url }}'
+    </script>
+</head>
+
+<body>
+    <div style="padding: 16px" id="home">
+    </div>
+
+
+    <div style="padding: 16px">
+
+        <button class="btn btn-info" id="button-cadastrar-paciente">Cadastrar Paciente</button>
+        <button class="btn btn-secondary" id="button-visualizar-pacientes">Visualizar Pacientes</button>
+        <button class="btn btn-primary" id="button-visualizar-paciente">Visualizar Paciente</button>
+    </div>
+
+    <!-- CADASTRAR -->
+    <div style="padding: 16px" id="div-cadastrar">
+        <form id="form-cadastrar">
+            <div class="form-group">
+                <label for="cpf">CPF Paciente</label>
+                <input type="text" class="form-control" id="cpf" maxlength="11">
+            </div>
+            <div class="form-group">
+                <label for="nome-completo">Nome Completo</label>
+                <input type="text" class="form-control" id="nome-completo" maxlength="120">
+            </div>
+            <div class="form-group">
+                <label for="data-nascimento">Data Nascimento</label>
+                <input type="date" class="form-control" id="data-nascimento" maxlength="120">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputCity">Sexo</label>
+                    <select multiple class="form-control" id="select-sexo">
+                        <option value="M" selected>M</option>
+                        <option value="F">F</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">Tipo Sanguíneo</label>
+                    <select multiple class="form-control" id="select-tipo-sanguineo">
+                        <option value='A+' selected>A+</option>
+                        <option value='A-'>A-</option>
+                        <option value='B+'>B+</option>
+                        <option value='B-'>B-</option>
+                        <option value='AB+'>AB+</option>
+                        <option value='AB-'>AB-</option>
+                        <option value='O+'>O+</option>
+                        <option value='O-'>O-</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group" id="alergias">
+                <label><b>Alergia(s)</b></label>
+                <table id="table-alergias">
+                    <tr>
+                        <th># Consulta</th>
+                        <th>Princípio Ativo</th>
+                        <th>Descrição</th>
+                        <th>Grau Risco</th>
+                    </tr>
+                </table>
+                <br>
+            </div>
+
+        </form>
+        <div class="input-group mb-3" id="div-cadastrar-alergia">
+            <div class="input-group-prepend" id="div-button-cadastrar-alergia">
+            </div>
+            <select class="custom-select" id="select-alergias">
+            </select>
+        </div>
+
+
+        <button class="btn btn-info" id="cadastrar">Cadastrar</button>
+        <button class="btn btn-info" id="atualizar">Atualizar</button>
+    </div>
+
+    <!-- VISUALIZAR TODOS -->
+    <div style="padding: 16px" id="visualizar-todos">
+        <h4 style="text-align: center">Pacientes</h4>
+        <table id="table-pacientes">
+            <tr>
+                <th>CPF</th>
+                <th>Nome Completo</th>
+                <th>Data Nascimento</th>
+                <th>Sexo</th>
+                <th>Tipo Sanguíneo</th>
+                <th>Inativo</th>
+                <th>-</th>
+                <th>-</th>
+            </tr>
+        </table>
+    </div>
+
+    <!-- VISUALIZAR PACIENTE -->
+    <div style="padding: 16px" id="visualizar-paciente">
+        <div id="div-buscar">
+            <form>
+                <div class="form-group">
+                    <label for="cpf-busca">CPF Paciente</label>
+                    <input type="text" class="form-control" id="cpf-busca" maxlength="11">
+                </div>
+            </form>
+            <button class="btn btn-info" id="buscar">Buscar</button>
+        </div>
+        <div style="padding: 16px" id="div-table-paciente">
+            <table id="table-paciente">
+                <tr>
+                    <th>CPF</th>
+                    <th>Nome Completo</th>
+                    <th>Data Nascimento</th>
+                    <th>Sexo</th>
+                    <th>Tipo Sanguíneo</th>
+                    <th>Inativo</th>
+                    <th>-</th>
+                    <th>-</th>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        setarLinkHome()
+
+        function setarLinkHome() {
+            $("#home").empty()
+            aLink = `<a href="${URL}/stagiop_bd" class="btn btn-outline-primary">Home</a>`
+            $("#home").append(aLink)
+        }
+
+        function hide_pages(divs) {
+            divs.map((div) => {
+                $(`#${div}`).hide()
+            })
+        }
+        function setSelect(selects, field) {
+            selects.map((select) => {
+                $(`#${select}`).val(field).change();
+            })
+        }
+        $('#form-cadastrar').trigger("reset");
+        hide_pages(['div-cadastrar', 'visualizar-todos', 'visualizar-paciente', 'div-table-paciente',
+            'atualizar', 'alergias', 'div-cadastrar-alergia'])
+        setSelect(['select-sexo'], "M")
+        setSelect(['select-tipo-sanguineo'], "A+")
+
+        $("#button-cadastrar-paciente").click(() => {
+            hide_pages(['visualizar-todos', 'visualizar-paciente', 'div-table-paciente', 'alergias', 'div-cadastrar-alergia'])
+            setSelect(['select-sexo'], "M")
+            setSelect(['select-tipo-sanguineo'], "A+")
+            $('#form-cadastrar').trigger("reset");
+            $("#cpf").prop("disabled", false);
+            $("#cadastrar").show()
+            $("#atualizar").hide()
+            $("#inativar").hide()
+            $("#div-cadastrar").show()
+        })
+
+        function criarBotaoAtualizar(cpf, data, id) {
+            nome = id.charAt(0).toUpperCase() + id.slice(1)
+            return `<button class="btn btn-info" id="${id}-${cpf}" onClick='${id}Paciente(${data})'>${nome}</button>`
+        }
+
+        function getPacientes() {
+            hide_pages(['div-cadastrar', 'visualizar-paciente', 'div-table-paciente', 'alergias', 'div-cadastrar-alergia'])
+            $("#table-pacientes tr:gt(0)").remove();
+            $("#table-paciente tr:gt(0)").remove();
+
+            $.ajax({
+                type: "GET",
+                url: `${URL}/stagiop_bd/api/paciente`,
+                success: function (resultado) {
+                    tableHtml = ''
+                    resultado.forEach(data => {
+                        inativar = data.inativo ? 'ativar' : 'inativar'
+                        tableHtml += `<tr>
+                                <td>` + data.cpf + `</td>
+                                <td>` + data.nome_completo + `</td>
+                                <td>` + data.data_nascimento + `</td>
+                                <td>` + data.sexo + `</td>
+                                <td>` + data.tipo_sanguineo + `</td>
+                                <td>` + (data.inativo ? 'Sim' : 'Não') + `</td>
+                                <td>` + criarBotaoAtualizar(data.cpf, JSON.stringify(data), 'atualizar') + `</td>
+                                <td>` + criarBotaoAtualizar(data.cpf, JSON.stringify(data), inativar) + `</td>
+                            </tr>`
+                    })
+                    $('#table-pacientes > tbody:last-child').append(tableHtml);
+                    $("#visualizar-todos").show()
+                },
+                error: function (e) {
+                    mostrarErro(e)
+                }
+            });
+
+        }
+
+        $("#button-visualizar-pacientes").click(() => {
+            getPacientes()
+        })
+
+        $("#button-visualizar-paciente").click(() => {
+            hide_pages(['div-cadastrar', 'visualizar-todos', 'alergias', 'div-cadastrar-alergia'])
+            $("#table-pacientes tr:gt(0)").remove();
+            $("#table-paciente tr:gt(0)").remove();
+            $("#visualizar-paciente").show()
+            $("#div-buscar").show()
+            $("#div-table-paciente").hide()
+
+        })
+
+        function formatarData(data) {
+            data = data.split('-')
+            return new Date(data[0], data[1] - 1, data[2]).toLocaleDateString('pt-BR')
+        }
+
+        function cadastrarAtualizarPaciente(cpfPaciente) {
+            url = `${URL}/stagiop_bd/api/paciente`
+            type = 'POST'
+            message = 'Paciente cadastrado com sucesso!'
+            if (cpfPaciente) {
+                url += `/${cpfPaciente}`
+                type = 'PUT'
+                message = 'Paciente atualizado com sucesso!'
+            }
+
+            $.ajax({
+                type: type,
+                url: url,
+                data: JSON.stringify({
+                    "cpf": $("#cpf").val(),
+                    "nome_completo": $("#nome-completo").val(),
+                    "data_nascimento": formatarData($("#data-nascimento").val()),
+                    "sexo": $(`#select-sexo  option:selected`).text().toLocaleUpperCase(),
+                    "tipo_sanguineo": $(`#select-tipo-sanguineo  option:selected`).text().toLocaleUpperCase()
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (resultado) {
+                    $("#div-cadastrar").hide()
+                    $("#visualizar-paciente").show()
+                    $("#div-buscar").hide()
+                    mostrarInfoPaciente(resultado)
+                    mostrarSwal('OK', 'success', message)
+                },
+                error: function (e) {
+                    mostrarErro(e)
+                }
+            });
+        }
+
+        $("#cadastrar").click(() => {
+            cadastrarAtualizarPaciente()
+        });
+
+        $("#atualizar").click(() => {
+            cadastrarAtualizarPaciente($("#cpf").val())
+        });
+
+        function mostrarInfoPaciente(data) {
+            $("#table-paciente tr:gt(0)").remove();
+            inativar = data.inativo ? 'ativar' : 'inativar'
+            tableHtml = `<tr>
+                    <td>` + data.cpf + `</td>
+                    <td>` + data.nome_completo + `</td>
+                    <td>` + data.data_nascimento + `</td>
+                    <td>` + data.sexo + `</td>
+                    <td>` + data.tipo_sanguineo + `</td>
+                    <td>` + (data.inativo ? 'Sim' : 'Não') + `</td>
+                    <td>` + criarBotaoAtualizar(data.cpf, JSON.stringify(data), 'atualizar') + `</td>
+                    <td>` + criarBotaoAtualizar(data.cpf, JSON.stringify(data), inativar) + `</td>
+            </tr>`
+            $('#table-paciente > tbody:last-child').append(tableHtml);
+            $("#div-table-paciente").show()
+        }
+
+        function atualizarPaciente(data) {
+            $("#table-pacientes tr:gt(0)").remove();
+            $("#table-paciente tr:gt(0)").remove();
+            $("#div-table-paciente").hide();
+            $("#visualizar-todos").hide()
+            $("#visualizar-paciente").hide();
+            $("#visualizar-pacientes").hide();
+
+            $('#form-cadastrar').trigger("reset");
+
+            $("#cadastrar").hide()
+            $("#atualizar").show()
+            setarForm(data)
+            $("#div-cadastrar").show()
+        }
+
+        function ativarInativarPaciente(data, ativar) {
+            $.ajax({
+                type: 'PUT',
+                url: `${URL}/stagiop_bd/api/paciente/${data.cpf}`,
+                data: JSON.stringify({
+                    "inativo": ativar
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (resultado) {
+                    getPacientes()
+                    message = `Paciente ${(ativar ? 'inativado' : 'ativado')} com sucesso!`
+                    mostrarSwal('OK', 'success', message)
+                },
+                error: function (e) {
+                    mostrarErro(e)
+                }
+            });
+        }
+
+        function ativarPaciente(data) {
+            ativarInativarPaciente(data, null)
+        }
+
+        function inativarPaciente(data) {
+            ativarInativarPaciente(data, true)
+        }
+
+        function setarForm(data) {
+            $("#cpf").val(data.cpf)
+            $("#cpf").prop("disabled", true);
+            $("#nome-completo").val(data.nome_completo)
+
+            dates = data.data_nascimento.split('/')
+            novaData = `${dates[2]}-${dates[1]}-${dates[0]}`
+            $("#data-nascimento").val(novaData)
+
+            setSelect(['select-sexo'], data.sexo)
+
+            setSelect(['select-tipo-sanguineo'], data.tipo_sanguineo)
+
+            getAlergias(data.cpf)
+            getAllAlergias()
+            setarBotaoCadastrarAlergia(data.cpf)
+            $("#div-cadastrar-alergia").show()
+        }
+
+        function mostrarSwal(title, type, text, isHtml) {
+            config = {
+                title: title,
+                type: type,
+                showCloseButton: true,
+                showCancelButton: false,
+                confirmButtonText: 'OK'
+            }
+            if (isHtml) {
+                config.html = text
+            } else {
+                config.text = text
+            }
+            swal(config)
+        }
+
+        function mostrarErro(e) {
+            var text = '';
+            if (e.responseJSON.message) {
+                text += e.responseJSON.message + '<br><br>Erro(s):'
+            }
+            if (e.responseJSON.errors) {
+                text += JSON.stringify(e.responseJSON.errors)
+            }
+            mostrarSwal('Atenção', 'error', text, true)
+        }
+
+        $("#buscar").click(() => {
+            $("#table-paciente tr:gt(0)").remove();
+
+            const cpfBusca = $("#cpf-busca").val();
+            if (!cpfBusca) {
+                mostrarSwal('Atenção', 'warning', "Favor informar o CPF do paciente!")
+            } else {
+                $.ajax({
+                    type: "GET",
+                    url: `${URL}/stagiop_bd/api/paciente/${cpfBusca}`,
+                    success: function (data) {
+                        if (data.message) {
+                            mostrarSwal('Atenção', 'warning', `Paciente  ${cpfBusca} não encontrado`)
+                        } else {
+                            mostrarInfoPaciente(data)
+                            getAlergias(cpfBusca)
+                            getAllAlergias()
+                            setarBotaoCadastrarAlergia(cpfBusca)
+                            $("#div-cadastrar-alergia").show()
+                        }
+                    },
+                    error: function (e) {
+                        $("#table-paciente tr:gt(0)").remove();
+                        mostrarErro(e)
+                    }
+                });
+            }
+
+        })
+
+        function setarBotaoCadastrarAlergia(cpf) {
+            $("#div-button-cadastrar-alergia").empty()
+            btnCadastrar = `<button class="btn btn-primary" style="float: right" onClick='cadastrarNovaAlergia(${cpf})'>Cadastrar nova alergia</button>`
+            $("#div-button-cadastrar-alergia").append(btnCadastrar)
+        }
+
+        function mostrarAlergias(resultado) {
+            $("#table-alergias tr:gt(0)").remove();
+            tableHtml = ''
+            resultado.forEach(data => {
+                tableHtml += `<tr>
+                                <td>` + data.consulta_id + `</td>
+                                <td>` + data.alergia_principio_ativo + `</td>
+                                <td>` + data.alergia_descricao + `</td>
+                                <td>` + data.alergia_grau_risco + `</td>
+                            </tr>`
+            })
+            $('#table-alergias > tbody:last-child').append(tableHtml);
+            $("#alergias").show()
+        }
+
+        function getAlergias(cpf) {
+            $.ajax({
+                type: "GET",
+                url: `${URL}/stagiop_bd/api/paciente-alergia/${cpf}`,
+                success: function (data) {
+                    mostrarAlergias(data)
+                    $("#select-alergias").hide()
+                },
+                error: function (e) {
+                    $("#table-paciente tr:gt(0)").remove();
+                }
+            });
+        }
+
+        function getAllAlergias() {
+            $("#select-alergias").empty();
+            $.ajax({
+                type: "GET",
+                url: `${URL}/stagiop_bd/api/alergia`,
+                success: function (data) {
+                    montarSelectAlergias(data)
+                },
+                error: function (e) {
+                }
+            });
+        }
+
+        function montarSelectAlergias(resultado) {
+            var $dropdown = $("#select-alergias");
+            $.each(resultado, function () {
+                $dropdown.append($("<option />").val(this.id).text(this.descricao));
+            });
+            $("#select-alergias").show()
+        }
+
+        async function cadastrarNovaAlergia(cpf) {
+            alergia = Number($(`#select-alergias  option:selected`).val())
+            swal({
+                title: 'Nova consulta',
+                text: 'Digite o ID da consulta:',
+                input: 'text',
+                button: {
+                    text: "Cadastrar",
+                    closeModal: false,
+                },
+            })
+                .then(consultaId => {
+                    if (!consultaId) throw null;
+
+                    return inserirAlergiaPaciente(cpf, alergia, consultaId)
+                })
+                .then(json => {
+                    getAlergias(cpf)
+                    mostrarSwal('OK', 'success', 'Consultada cadastrada com sucesso!')
+                    getAllAlergias()
+                })
+                .catch(err => {
+                    mostrarErro(err)
+                });
+        }
+
+        function inserirAlergiaPaciente(cpf, alergia, consultaId) {
+            return new Promise(function (resolve, reject) {
+                $.ajax({
+                    type: 'POST',
+                    url: `${URL}/stagiop_bd/api/paciente-alergia`,
+                    data: JSON.stringify({
+                        "paciente": cpf,
+                        "alergia": alergia,
+                        "consulta_id": consultaId
+                    }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (resultado) {
+                        resolve(cpf)
+                    },
+                    error: function (e) {
+                        reject(e)
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>
